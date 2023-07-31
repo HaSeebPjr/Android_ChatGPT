@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:background="@color/bgColor">
+
+    <!--    <ImageView android:layout_width="match_parent" android:layout_height="wrap_content"-->
+<!--               android:src="@drawable/main_icon"-->
+<!--               android:layout_marginTop="20dp"-->
+<!--    />-->
+
+    <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent" android:layout_height="match_parent"
+                                               android:id="@+id/recyclerView"
+                                               android:layout_above="@+id/messageSection"
+                                               android:layout_marginBottom="20dp"/>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="60dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/messageSection"
+    >
+
+        <EditText android:layout_width="340dp" android:layout_height="match_parent"
+                  android:hint="@string/hintMsg"
+                  android:textColorHint="@color/hintColor"
+                  android:textColor="@color/black"
+                  android:textSize="15sp"
+                  android:layout_centerInParent="true"
+                  android:padding="10dp"
+                  android:layout_marginStart="10dp"
+                  android:layout_marginBottom="10dp"
+                  android:layout_toStartOf="@+id/sendBtn"
+                  android:background="@drawable/bg_corner"
+                  android:id="@+id/typeMessage"
+                  android:elevation="5dp"
+        />
+
+        <ImageButton android:layout_width="40dp" android:layout_height="40dp"
+                     android:layout_alignParentEnd="true"
+                     android:id="@+id/sendBtn"
+                     android:layout_centerInParent="true"
+                     android:layout_marginEnd="10dp"
+                     android:layout_marginStart="10dp"
+                     android:src="@drawable/send_btn"
+                     android:background="?attr/selectableItemBackgroundBorderless"
+        />
+    </RelativeLayout>
+</RelativeLayout>
+</layout>

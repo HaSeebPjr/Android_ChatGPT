@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Sweet BOT</string>
+    <string name="hintMsg">Write Message</string>
+</resources>

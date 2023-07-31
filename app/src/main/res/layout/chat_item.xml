@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_margin="5dp"
+                  android:id="@+id/leftChat"
+                  android:paddingRight="10dp"
+                  android:paddingLeft="10dp"
+                  android:elevation="5dp"
+                  android:orientation="vertical"
+    >
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textColor="@color/white"
+                  android:textSize="16sp"
+                  android:padding="10dp"
+                  android:id="@+id/leftChatText"
+                  android:background="@drawable/bg_corner"
+                  android:backgroundTint="@color/leftChatColor"
+                  android:text="gdjfdskgjdfg"
+        />
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/leftMsgTime"
+                  android:textColor="@color/hintColor"
+                  android:layout_marginStart="10dp"
+                  android:layout_gravity="center"
+                  android:gravity="end"
+                  android:layout_marginTop="3dp"
+                  android:layout_marginEnd="5dp"
+
+        />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="70dp"
+                  android:layout_alignParentEnd="true"
+                  android:layout_margin="5dp"
+                  android:id="@+id/rightChat"
+                  android:paddingRight="10dp"
+                  android:paddingLeft="10dp"
+                  >
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/rightMsgTime"
+                  android:textColor="@color/hintColor"
+                  android:layout_marginStart="10dp"
+                  android:layout_gravity="center"
+                  android:paddingEnd="10dp"
+                  android:paddingStart="10dp"
+        />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textSize="16sp"
+                  android:padding="10dp"
+                  android:textColor="@color/leftChatColor"
+                  android:id="@+id/rightChatText"
+                  android:background="@drawable/bg_corner"
+                  android:backgroundTint="@color/rightChatColor"
+                  android:elevation="5dp"
+        />
+
+
+    </LinearLayout>
+</RelativeLayout>

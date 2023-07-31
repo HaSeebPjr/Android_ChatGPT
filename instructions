@@ -1,0 +1,128 @@
+ChatGPT Process
+	- Design layout
+	- Another layout for chat item - left and right chat
+	- MainActivity {
+		- Define all view widgets
+		- list of type Message
+		- Object of MessageAdapter
+		- add the api field JSON
+		- onCreate(){
+
+			- initialize Message adapter object
+			- set recyclerView adapter and pass it messageAdapter as parameter
+			- instantiate LinearLayoutManager
+			- setStackFromEnd to true using LLM object -> it will scroll the chat from end to top
+			- set recyclerView layoutManager to the LLM object
+
+			- Click on send button {
+			- init list to arrayList.
+			- take question from editText
+			- call addToChat(question, Message.SENT_BY_ME);
+			- call, callApi(question) method.
+			- clear editText message
+			}
+		}
+		
+	}
+
+	- method -> addToChat(message, sentBy){
+		runOnUiThread(new Runnable ... {
+			run(){
+				- messageList.add(new Message(message, sentBy));
+				- notify messageAdapter when DataSetChanged. to reload.
+				- give smoothScrollToPosition(messageAdapter.getItem count()); to the recyclerView. -> it will go at the last item position.
+			}
+		})
+	}
+
+	- method -> addResponse(response_sent_by_bot){
+		call addtoChat() method
+	}
+
+	- implement okHttp to the dependicies
+
+	- method -> void callAPI(String question){
+        //okhttp
+        messageList.add(new Message("Typing... ",Message.SENT_BY_BOT));
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("model","text-davinci-003");
+            jsonBody.put("prompt",question);
+            jsonBody.put("max_tokens",4000);
+            jsonBody.put("temperature",0);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(jsonBody.toString(),JSON);
+        Request request = new Request.Builder()
+                .url("https://api.openai.com/v1/completions")
+                .header("Authorization","Bearer YOUR_API_KEY")
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                addResponse("Failed to load response due to "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.isSuccessful()){
+                    JSONObject  jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response.body().string());
+                        JSONArray jsonArray = jsonObject.getJSONArray("choices");
+                        String result = jsonArray.getJSONObject(0).getString("text");
+                        addResponse(result.trim());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }else{
+                    addResponse("Failed to load response due to "+response.body().toString());
+                }
+            }
+        });
+    }
+
+
+
+	- Create message model - new class -> message {
+		- fields: SENT_BY_ME, SENT_BY_BOT, message, sentBy.
+		- Methods: constructor -> default and two last parameter, getter and setter for two last parameter.
+	}
+	- Create message adapter to show message to RecyclerView -> class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder {
+		- list of type Message
+		- constructor with list parameter - init list
+		- Implement all methods that's needed for the class {
+			- onCreateViewHolder(...){
+				- Create new View object = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, null); // chat item is the layout for chats.
+				- Create new MyViewHolder Object and assign it the above view as a parameter for constructor.
+				return the viewHolder;
+			}
+
+			- onBindViewHolder(...){
+				- new object Message = get position from list
+				- check if(message is sent_by_me){
+					- hide left chatView, visible right chatView and set rightTextView to the editText message.
+				}else {
+					above vice versa
+				}
+			}
+
+			- getItemCount(){
+				-return size of list
+			}
+		}
+
+		- inner class MyViewHolder extends RecyclerView.ViewHolder {
+			- take the xml items -> LinearLayouts..., TextViews
+			- constructor(View itemView){
+				- init the above xml items -> find them.
+			}
+		}
+	}
+	-
